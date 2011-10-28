@@ -1,9 +1,44 @@
+#---------------------------------------------------------------
 # Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+#---------------------------------------------------------------
 
-# Home page
-GET     /                                       Application.index
+# Módulo CRUD
+*       /admin               module:crud
+
+#Tipos de Evaluaciones
+GET    /tiposevaluaciones        ApiTipoEvaluacion.all
+GET    /tiposevaluaciones/{id}   ApiTipoEvaluacion.get
+POST   /tiposevaluaciones        ApiTipoEvaluacion.post
+PUT    /tiposevaluaciones/{id}   ApiTipoEvaluacion.put
+DELETE /tiposevaluaciones/{id}   ApiTipoEvaluacion.delete
+
+#Tipos de Criterios
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios           ApiTipoCriterio.all
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{id}      ApiTipoCriterio.get
+POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios           ApiTipoCriterio.post
+PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{id}      ApiTipoCriterio.put
+DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{id}      ApiTipoCriterio.delete
+
+#Criterios Listas de Valrores
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores           ApiCriterioListaValor.all
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores/{id}      ApiCriterioListaValor.get
+POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores           ApiCriterioListaValor.post
+PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores/{id}      ApiCriterioListaValor.put
+DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores/{id}      ApiCriterioListaValor.delete
+
+#TIpos de Conceptos Economicos
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomicos.all
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.get
+POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomicos.post
+PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.put
+DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.delete
+
+#Tipos de Documentos Accesibles
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles           ApiTipoDocumentoAccesible.all
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles/{id}      ApiTipoDocumentoAccesible.get
+POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles           ApiTipoDocumentoAccesible.post
+PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles/{id}      ApiTipoDocumentoAccesible.put
+DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles/{id}      ApiTipoDocumentoAccesible.delete
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
@@ -11,5 +46,5 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-# Catch all
-*       /{controller}/{action}                  {controller}.{action}
+# Ignorando las rutas por defecto
+#*       /{controller}/{action}                  {controller}.{action}

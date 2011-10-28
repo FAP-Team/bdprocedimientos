@@ -15,3 +15,5 @@ tmp
 test-result
 eclipse
 server.pid
+lib/*.jar
+modules/*
