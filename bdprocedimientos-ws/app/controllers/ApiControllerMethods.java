@@ -37,7 +37,7 @@ public class ApiControllerMethods<T> {
 		Params params = getParams();
 		Integer pageSize = params.get("pageSize", Integer.class);
 		Integer pageStartIndex = params.get("pageStartIndex", Integer.class);
-		
+		checkValidationErrors();
 		
 		List<Object> result = QueryUtils.fetchPaginate(query, pageSize, pageStartIndex);
 		String json = new GsonBuilder()

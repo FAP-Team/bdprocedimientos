@@ -1,7 +1,7 @@
 package api;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.List;
 import java.util.List;
 import java.util.Set;
 
@@ -57,8 +57,8 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		Response get = GET(TiposEvaluacionesURL);
 		assertIsOk(get);
 		
-		Type type = new TypeToken<Collection<TipoEvaluacion>>(){}.getType();
-		Collection<TipoEvaluacion> tiposEvaluaciones = new Gson().fromJson(getContent(get), type);
+		Type type = new TypeToken<List<TipoEvaluacion>>(){}.getType();
+		List<TipoEvaluacion> tiposEvaluaciones = new Gson().fromJson(getContent(get), type);
 		assertNotNull(tiposEvaluaciones);
 		assertEquals(3, tiposEvaluaciones.size());
 		TipoEvaluacion first = tiposEvaluaciones.iterator().next();
@@ -68,11 +68,39 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		assertEquals("nombre", first.nombre);
 	}
 	
-	private Collection<TipoEvaluacion> fetchAll(){
+	@Test
+	public void allPaginate(){
+		String evaluacion = evaluacionJson("procedimiento", "nombre", true, false);
+		Response post = POST(TiposEvaluacionesURL, "application/json", evaluacion);
+		assertIsOk(post);
+		evaluacion = evaluacionJson("procedimiento1", "nombre1", true, false);
+		post = POST(TiposEvaluacionesURL, "application/json", evaluacion);
+		assertIsOk(post);
+		evaluacion = evaluacionJson("procedimiento2", "nombre2", true, false);
+		post = POST(TiposEvaluacionesURL, "application/json", evaluacion);
+		assertIsOk(post);
+		
+		List<TipoEvaluacion> all = fetchAll();
+		assertEquals(3, all.size());
+		
+		List<TipoEvaluacion> limit1 = parseAll(GET(TiposEvaluacionesURL + "?pageSize=1"));
+		assertEquals(1, limit1.size());
+		assertEquals(all.get(0), limit1.get(0));
+
+		List<TipoEvaluacion> limit1Start2 = parseAll(GET(TiposEvaluacionesURL + "?pageSize=1&pageStartIndex=2"));
+		assertEquals(1, limit1Start2.size());
+		assertEquals(all.get(2), limit1Start2.get(0));
+	}
+	
+	private List<TipoEvaluacion> fetchAll(){
 		Response get = GET(TiposEvaluacionesURL);
 		assertIsOk(get);
-		Type type = new TypeToken<Collection<TipoEvaluacion>>(){}.getType();
-		Collection<TipoEvaluacion> tiposEvaluaciones = new Gson().fromJson(getContent(get), type);
+		return parseAll(get);
+	}
+	
+	private List<TipoEvaluacion> parseAll(Response response){
+		Type type = new TypeToken<List<TipoEvaluacion>>(){}.getType();
+		List<TipoEvaluacion> tiposEvaluaciones = new Gson().fromJson(getContent(response), type);
 		return tiposEvaluaciones;
 	}
 	
@@ -116,7 +144,7 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		assertNotNull(tipoEvaluacion);
 		assertNotNull(tipoEvaluacion.id);
 		
-		Collection<TipoEvaluacion> all = fetchAll();
+		List<TipoEvaluacion> all = fetchAll();
 		assertNotNull(all);
 		assertEquals(1, all.size());
 		
@@ -201,4 +229,13 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		badRequestWithIncorrectId(PUT(TiposEvaluacionesURL + "/notAValidId", "application/json", ""));
 		badRequestWithIncorrectId(DELETE(TiposEvaluacionesURL + "/notAValidId"));
 	}
+	
+	@Test
+	public void badRequestAllPaginate(){
+		Response get = GET(TiposEvaluacionesURL + "?pageSize=a&pageStartIndex=b");
+		ValidationErrors errores = checkValidationErrors(get);
+		assertTrue(errores.contains("pageSize", "Formato incorrecto"));
+		assertTrue(errores.contains("pageStartIndex", "Formato incorrecto"));
+	}
+	
 }
