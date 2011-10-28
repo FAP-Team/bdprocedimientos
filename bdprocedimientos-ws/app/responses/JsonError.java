@@ -1,6 +1,7 @@
 package responses;
 
 public class JsonError {
+	
 	private Object error;
 	
 	public JsonError(Object error) {

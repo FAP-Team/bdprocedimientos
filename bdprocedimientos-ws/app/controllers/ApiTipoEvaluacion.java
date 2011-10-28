@@ -1,5 +1,6 @@
 package controllers;
 
+import models.TipoCriterio;
 import models.TipoEvaluacion;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.mvc.Controller;
@@ -22,7 +23,7 @@ public class ApiTipoEvaluacion extends Controller {
 	}
 	
 	public static void post(String body){
-		TipoEvaluacion tipoEvaluacion = ApiControllerMethods.deserialize(body, TipoEvaluacion.class);
+		TipoEvaluacion tipoEvaluacion = ApiControllerMethods.deserialize(body, TipoEvaluacion.class);		
 		ApiControllerMethods.post(tipoEvaluacion);
 	}
 	

@@ -19,6 +19,7 @@ import play.mvc.results.RenderJson;
 import responses.ErrorResponse;
 import responses.ResourceNotFoundResponse;
 import responses.ValidationErrors;
+import responses.ValidationErrorsResponse;
 import serializers.AscendentExclusionEstrategy;
 import serializers.IdExclusionEstrategy;
 import serializers.RelationExclusionStrategy;
@@ -48,7 +49,7 @@ public class ApiControllerMethods<T> {
 
 	public static void checkValidationErrors(){
 		if(Validation.hasErrors()){
-			throw new ValidationErrors(Validation.errors());
+			throw new ValidationErrorsResponse(Validation.errors());
 		}		
 	}
 	
@@ -105,6 +106,7 @@ public class ApiControllerMethods<T> {
 	}
 	
 	public static <T extends Model> void put(T o, String json){
+		notFoundIfNull(o);
 		T param = (T)deserialize(json, o.getClass());
 		PojoUtils.copyAllSimpleFields(param, o);
 		o.validateAndSave();
