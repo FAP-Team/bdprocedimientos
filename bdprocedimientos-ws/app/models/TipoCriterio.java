@@ -50,12 +50,12 @@ public class TipoCriterio extends Model{
 	@MaxLength(255)
 	public String jerarquia;
 	
-	@Column(name="valor_precisio")
+	@Column(name="valor_precision")
 	public int precision = 0;
 	
-	public double valorMaximo;
+	public Double valorMaximo;
 	
-	public double valorMinimoCorte;
+	public Double valorMinimoCorte;
 	
 	@Required
 	@Enumerated(EnumType.STRING)
@@ -65,7 +65,7 @@ public class TipoCriterio extends Model{
 	public List<CriterioListaValor> listaValores;
 	
 	@Required
-	public int transparencia;
+	public Integer transparencia;
 	
 	@Required
 	public boolean comentariosAdministracion;

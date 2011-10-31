@@ -4,6 +4,7 @@
 
 # Módulo CRUD
 *       /admin               module:crud
+GET     / 					 Application.index
 
 #Tipos de Evaluaciones
 GET    /tiposevaluaciones        ApiTipoEvaluacion.all
@@ -27,11 +28,11 @@ PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/li
 DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposcriterios/{idTipoCriterio}/listavalores/{id}      ApiCriterioListaValor.delete
 
 #TIpos de Conceptos Economicos
-GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomicos.all
-GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.get
-POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomicos.post
-PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.put
-DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomicos.delete
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomico.all
+GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomico.get
+POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos           ApiTipoCEconomico.post
+PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomico.put
+DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposceconomicos/{id}      ApiTipoCEconomico.delete
 
 #Tipos de Documentos Accesibles
 GET     /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles           ApiTipoDocumentoAccesible.all

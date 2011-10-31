@@ -1,0 +1,25 @@
+# Ignore all dotfiles...
+.*
+!.gitignore
+
+# OSX
+.DS_Store
+
+# Wiki pages
+wiki
+
+# Ignore Play! app #
+bdprocedimientos-ws/db
+bdprocedimientos-ws/eclipse
+bdprocedimientos-ws/log
+bdprocedimientos-ws/logs
+bdprocedimientos-ws/precompiled
+bdprocedimientos-ws/tmp
+bdprocedimientos-ws/test-result
+bdprocedimientos-ws/eclipse
+bdprocedimientos-ws/server.pid
+bdprocedimientos-ws/lib/*.jar
+bdprocedimientos-ws/modules/*
+
+# Ignore maven
+bdprocedimientos-client/target

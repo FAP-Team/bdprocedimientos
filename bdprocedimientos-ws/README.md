@@ -1,4 +1,65 @@
 # Servicio web de base de datos de procedimientos
+
+
+## Entidades
+
+Entidades utilizadas en el servicios web
+
+### TipoEvaluacion
+
+	TipoEvaluacion {
+		Long id
+		String tipoProcedimiento
+		String nombre
+		List<TipoDocumentoAccesible> tiposDocumentosAccesibles
+		List<TipoCriterio> tiposCriterios
+		List<TipoCEconomico> tipoCEconomicos
+		boolean comentariosAdministracion
+		boolean comentariosSolicitante
+		int numeroEvaluaciones			
+	}
+
+## TipoCriterio
+
+TipoCriterio {
+	Long id
+	String nombre
+	String descripcion
+	String instrucciones
+	Enum<ClaseCriterio> clase (automatico, manual, automaticomodificable)
+	String jerarquia
+	Long precision
+	Double valorMaximo
+	Double valorMinimoCorte
+	Enum<TipoValorCriterio> tipoValor (cantidad, lista)
+	List<CriterioListaValor> listaValores
+	int transparencia
+	boolean comentariosAdministracion
+	boolean comentariosSolicitante	
+}
+
+## CriterioListaValor
+
+CriterioListaValor {
+	double valor
+	String descripcion
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Tipos de Criterios
 
 	/tiposcriterios

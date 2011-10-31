@@ -56,6 +56,7 @@ public class ApiControllerMethods<T> {
 	public static String serialize(Object o){
 		return new GsonBuilder()
 		.addSerializationExclusionStrategy(new AscendentExclusionEstrategy())
+		.serializeNulls()
 		.create()
 		.toJson(o);
 	}
@@ -100,6 +101,9 @@ public class ApiControllerMethods<T> {
 	}
 	
 	public static <T extends Model> void post(T o){
+		if(o == null)
+			throw new ErrorResponse("Empty body", Http.StatusCode.BAD_REQUEST);
+		
 		o.validateAndCreate();
 		checkValidationErrors();
 		serializeAndRender(o);

@@ -43,9 +43,7 @@ public class TipoCEconomico extends Model {
 	@MaxLength(255)
 	public String jerarquia;
 	
-	@Required
 	public boolean comentariosAdministracion;
 	
-	@Required
 	public boolean comentariosSolicitante;
 }

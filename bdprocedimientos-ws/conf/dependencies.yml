@@ -3,4 +3,4 @@
 require:
     - play
     - play -> crud
-    - net.sf.flexjson -> flexjson 2.1
+    - play -> coffee 1.0

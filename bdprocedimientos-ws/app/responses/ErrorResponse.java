@@ -49,7 +49,8 @@ public class ErrorResponse extends Result{
 		response.status = status;
         String encoding = getEncoding();
 		setContentTypeIfNotSet(response, "application/json; charset=" + encoding);
-	    String json = JSonUtils.getSerializer().serialize(error);
+	    
+		String json = JSonUtils.getGson().toJson(error);
 		try {
 	    	response.out.write(json.getBytes(getEncoding()));
 	    } catch (Exception e) {
