@@ -43,6 +43,7 @@ public class ApiControllerMethods<T> {
 		String json = new GsonBuilder()
 				.addSerializationExclusionStrategy(new AscendentExclusionEstrategy())
 				.serializeNulls()
+				.setPrettyPrinting()
 				.create().toJson(result);
 		 throw new RenderJson(json);
 	}
@@ -97,6 +98,8 @@ public class ApiControllerMethods<T> {
 				.fromJson(json, classOfT);
 		}catch(JsonSyntaxException e){
 			throw new ErrorResponse(e.getMessage(), Http.StatusCode.BAD_REQUEST);			
+		}catch(Exception e){
+			throw new ErrorResponse(e.getMessage(), Http.StatusCode.BAD_REQUEST);
 		}
 	}
 	
