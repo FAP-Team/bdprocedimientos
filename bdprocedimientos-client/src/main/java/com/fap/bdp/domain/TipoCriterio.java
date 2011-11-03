@@ -6,8 +6,6 @@ import java.util.List;
 public class TipoCriterio {
 
 	public Long id;
-	
-	public TipoEvaluacion tipoEvaluacion;
 
 	public String nombre;
 

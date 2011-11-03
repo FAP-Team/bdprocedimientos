@@ -11,7 +11,6 @@ import com.fap.bdp.exceptions.BDPNotFoundException;
 public class TipoEvaluacionServiceTest {
     
     private static final String endPoint = "http://localhost:9000";
-    
     private BDProcedimientosService service = new BDProcedimientosService(endPoint);
     
     @Test

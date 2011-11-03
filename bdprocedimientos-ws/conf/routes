@@ -3,8 +3,7 @@
 #---------------------------------------------------------------
 
 # Módulo CRUD
-*       /admin               module:crud
-GET     / 					 Application.index
+*       / module:crud
 
 #Tipos de Evaluaciones
 GET    /tiposevaluaciones        ApiTipoEvaluacion.all
