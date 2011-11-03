@@ -33,17 +33,17 @@ public class TipoEvaluacionServiceTest {
     
     private TipoEvaluacion dummyTipoEvaluacion(){
     	TipoEvaluacion tipoEvaluacion = new TipoEvaluacion();
-    	tipoEvaluacion.nombre = "Evaluacion a";
-    	tipoEvaluacion.tipoProcedimiento = "Procedimiento a";
-    	tipoEvaluacion.comentariosSolicitante = true;
-    	tipoEvaluacion.comentariosAdministracion = true;
+    	tipoEvaluacion.setNombre("Evaluacion a");
+    	tipoEvaluacion.setTipoProcedimiento("Procedimiento a");
+    	tipoEvaluacion.setComentariosSolicitante(true);
+    	tipoEvaluacion.setComentariosAdministracion(true);
     	return tipoEvaluacion;
     }
     
     private void deleteTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
-    	service.deleteTipoEvaluacion(tipoEvaluacion.id);
+    	service.deleteTipoEvaluacion(tipoEvaluacion.getId());
     	try {
-    		service.getTipoEvaluacion(tipoEvaluacion.id);
+    		service.getTipoEvaluacion(tipoEvaluacion.getId());
     		Assert.assertTrue(false);
     	}catch(BDPNotFoundException e){
     		//Not found
@@ -56,7 +56,7 @@ public class TipoEvaluacionServiceTest {
     	TipoEvaluacion createdTipoEvaluacion = service.createTipoEvaluacion(tipoEvaluacion);
     	
     	Assert.assertNotNull(createdTipoEvaluacion);
-    	Assert.assertNotNull(createdTipoEvaluacion.id);
+    	Assert.assertNotNull(createdTipoEvaluacion.getId());
     	
     	deleteTipoEvaluacion(createdTipoEvaluacion);
     }
@@ -66,15 +66,15 @@ public class TipoEvaluacionServiceTest {
     	TipoEvaluacion tipoEvaluacion = dummyTipoEvaluacion();
     	TipoEvaluacion createdTipoEvaluacion = service.createTipoEvaluacion(tipoEvaluacion);
     	Assert.assertNotNull(createdTipoEvaluacion);
-    	Assert.assertNotNull(createdTipoEvaluacion.id);
+    	Assert.assertNotNull(createdTipoEvaluacion.getId());
     	
-    	createdTipoEvaluacion.nombre = "nombre modificado";
+    	createdTipoEvaluacion.setNombre("nombre modificado");
     	TipoEvaluacion updatedTipoEvaluacion = service.updateTipoEvaluacion(createdTipoEvaluacion);
     	
     	Assert.assertNotNull(updatedTipoEvaluacion);
-    	Assert.assertNotNull(updatedTipoEvaluacion.id);
-    	Assert.assertEquals(createdTipoEvaluacion.id, updatedTipoEvaluacion.id);
-    	Assert.assertFalse(!createdTipoEvaluacion.nombre.equals(updatedTipoEvaluacion.nombre));
+    	Assert.assertNotNull(updatedTipoEvaluacion.getId());
+    	Assert.assertEquals(createdTipoEvaluacion.getId(), updatedTipoEvaluacion.getId());
+    	Assert.assertFalse(!createdTipoEvaluacion.getNombre().equals(updatedTipoEvaluacion.getNombre()));
     	
     	deleteTipoEvaluacion(createdTipoEvaluacion);	
     }

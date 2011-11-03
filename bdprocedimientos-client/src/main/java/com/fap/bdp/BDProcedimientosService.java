@@ -58,19 +58,19 @@ public class BDProcedimientosService {
 		
 	public TipoEvaluacion createTipoEvaluacionRecusive(TipoEvaluacion tipoEvaluacion) throws Exception {
 		TipoEvaluacion tipoEvaluacionCreated = createTipoEvaluacion(tipoEvaluacion);
-		for(TipoCriterio tipoCriterio : tipoEvaluacion.tiposCriterios){
-			TipoCriterio tipoCriterioCreated = createTipoCriterio(tipoEvaluacionCreated.id, tipoCriterio);
-			for(CriterioListaValor criterioListaValor : tipoCriterio.listaValores){
-				createCriterioListaValor(tipoEvaluacionCreated.id, tipoCriterioCreated.id, criterioListaValor);
+		for(TipoCriterio tipoCriterio : tipoEvaluacion.getTiposCriterios()){
+			TipoCriterio tipoCriterioCreated = createTipoCriterio(tipoEvaluacionCreated.getId(), tipoCriterio);
+			for(CriterioListaValor criterioListaValor : tipoCriterio.getListaValores()){
+				createCriterioListaValor(tipoEvaluacionCreated.getId(), tipoCriterioCreated.getId(), criterioListaValor);
 			}
 		}
-		for(TipoCEconomico tipoCEconomico : tipoEvaluacion.tiposCEconomicos){
-			createTipoCEconomico(tipoEvaluacionCreated.id, tipoCEconomico);
+		for(TipoCEconomico tipoCEconomico : tipoEvaluacion.getTiposCEconomicos()){
+			createTipoCEconomico(tipoEvaluacionCreated.getId(), tipoCEconomico);
 		}
-		for(TipoDocumentoAccesible tipoDocumentoAccesible : tipoEvaluacion.tiposDocumentosAccesibles){
-			createTipoDocumentoAccesible(tipoEvaluacionCreated.id, tipoDocumentoAccesible);
+		for(TipoDocumentoAccesible tipoDocumentoAccesible : tipoEvaluacion.getTiposDocumentosAccesibles()){
+			createTipoDocumentoAccesible(tipoEvaluacionCreated.getId(), tipoDocumentoAccesible);
 		}
-		return getTipoEvaluacion(tipoEvaluacionCreated.id);
+		return getTipoEvaluacion(tipoEvaluacionCreated.getId());
 	}
 	
 	public TipoEvaluacion createTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
@@ -114,11 +114,11 @@ public class BDProcedimientosService {
 	}
 	
 	public TipoEvaluacion updateTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposEvaluaciones(tipoEvaluacion.id), tipoEvaluacion, TipoEvaluacion.class);
+		return restTemplate.update(Routes.getUrlTiposEvaluaciones(tipoEvaluacion.getId()), tipoEvaluacion, TipoEvaluacion.class);
 	}
 	
 	public TipoCriterio updateTipoCriterio(Long idEvaluacion, TipoCriterio tipoCriterio) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.id), tipoCriterio, TipoCriterio.class);
+		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.getId()), tipoCriterio, TipoCriterio.class);
 	}
 	
 	public CriterioListaValor updateCriterioListaValor(Long idTipoEvaluacion, Long idTipoCriterio, CriterioListaValor criterioListaValor) throws Exception {
@@ -126,10 +126,10 @@ public class BDProcedimientosService {
 	}
 	
 	public TipoCEconomico updateTipoCEconomico(Long idEvaluacion, TipoCEconomico tipoCEconomico) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCEconomico.id), tipoCEconomico, TipoCEconomico.class);
+		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCEconomico.getId()), tipoCEconomico, TipoCEconomico.class);
 	}
 	
 	public TipoCriterio updateTipoDocumentoAccesible(Long idEvaluacion, TipoCriterio tipoCriterio) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.id), tipoCriterio, TipoCriterio.class);
+		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.getId()), tipoCriterio, TipoCriterio.class);
 	}
 }

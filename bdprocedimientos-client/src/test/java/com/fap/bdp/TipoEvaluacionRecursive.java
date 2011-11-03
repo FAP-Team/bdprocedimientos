@@ -12,26 +12,26 @@ public class TipoEvaluacionRecursive {
 	@Test
 	public void createRecursive() throws Exception {
 		TipoEvaluacion tipoEvaluacion = new TipoEvaluacion();
-		tipoEvaluacion.nombre = "Recursiva";
-		tipoEvaluacion.tipoProcedimiento = "Procedimiento";
+		tipoEvaluacion.setNombre("Recursiva");
+		tipoEvaluacion.setTipoProcedimiento("Procedimiento");
 		
 		TipoCriterio criterio1 = new TipoCriterio();
-		criterio1.clase = ClaseCriterio.automatico;
-		criterio1.comentariosAdministracion = true;
-		criterio1.comentariosSolicitante = false;
-		criterio1.descripcion = "Descripción";
-		criterio1.instrucciones = "Instrucciones";
-		criterio1.jerarquia = "1.1.1";
-		criterio1.nombre = "nombre:)";
-		criterio1.precision = 3;
-		criterio1.tipoValor = TipoValorCriterio.cantidad;
-		criterio1.valorMaximo = 3.5;
-		criterio1.valorMinimoCorte = 24.3;
-		criterio1.transparencia = 1;
+		criterio1.setClase(ClaseCriterio.automatico);
+		criterio1.setComentariosAdministracion(true);
+		criterio1.setComentariosSolicitante(false);
+		criterio1.setDescripcion("Descripción");
+		criterio1.setInstrucciones("Instrucciones");
+		criterio1.setJerarquia("1.1.1");
+		criterio1.setNombre("nombre");
+		criterio1.setPrecision(3);
+		criterio1.setTipoValor(TipoValorCriterio.cantidad);
+		criterio1.setValorMaximo(3.5);
+		criterio1.setValorMinimoCorte(24.3);
+		criterio1.setTransparencia(1);
 		
-		tipoEvaluacion.tiposCriterios.add(criterio1);
-		tipoEvaluacion.tiposCriterios.add(criterio1);
-		tipoEvaluacion.tiposCriterios.add(criterio1);
+		tipoEvaluacion.getTiposCriterios().add(criterio1);
+		tipoEvaluacion.getTiposCriterios().add(criterio1);
+		tipoEvaluacion.getTiposCriterios().add(criterio1);
 		
 		BDProcedimientosService service = new BDProcedimientosService("http://localhost:9000");
 		service.createTipoEvaluacionRecusive(tipoEvaluacion);

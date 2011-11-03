@@ -5,28 +5,101 @@ import java.util.List;
 
 public class TipoEvaluacion{
 	
-	public Long id;
+	private Long id;
 	
-	public String nombre;
+	private String nombre;
 	
-	public String tipoProcedimiento;
+	private String tipoProcedimiento;
 	
-	public List<TipoDocumentoAccesible> tiposDocumentosAccesibles;
+	private List<TipoDocumentoAccesible> tiposDocumentosAccesibles;
 	
-	public List<TipoCriterio> tiposCriterios;
+	private List<TipoCriterio> tiposCriterios;
 	
-	public List<TipoCEconomico> tiposCEconomicos;
+	private List<TipoCEconomico> tiposCEconomicos;
 	
-	public boolean comentariosAdministracion;
+	private boolean comentariosAdministracion;
 	
-	public boolean comentariosSolicitante;
+	private boolean comentariosSolicitante;
 	
-	public int numeroEvaluaciones = 1;
+	private int numeroEvaluaciones = 1;
 	
 	public TipoEvaluacion(){
 		tiposDocumentosAccesibles = new ArrayList<TipoDocumentoAccesible>();
 		tiposCriterios = new ArrayList<TipoCriterio>();
 		tiposCEconomicos = new ArrayList<TipoCEconomico>();
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getTipoProcedimiento() {
+		return tipoProcedimiento;
+	}
+
+	public void setTipoProcedimiento(String tipoProcedimiento) {
+		this.tipoProcedimiento = tipoProcedimiento;
+	}
+
+	public List<TipoDocumentoAccesible> getTiposDocumentosAccesibles() {
+		return tiposDocumentosAccesibles;
+	}
+
+	public void setTiposDocumentosAccesibles(
+			List<TipoDocumentoAccesible> tiposDocumentosAccesibles) {
+		this.tiposDocumentosAccesibles = tiposDocumentosAccesibles;
+	}
+
+	public List<TipoCriterio> getTiposCriterios() {
+		return tiposCriterios;
+	}
+
+	public void setTiposCriterios(List<TipoCriterio> tiposCriterios) {
+		this.tiposCriterios = tiposCriterios;
+	}
+
+	public List<TipoCEconomico> getTiposCEconomicos() {
+		return tiposCEconomicos;
+	}
+
+	public void setTiposCEconomicos(List<TipoCEconomico> tiposCEconomicos) {
+		this.tiposCEconomicos = tiposCEconomicos;
+	}
+
+	public boolean isComentariosAdministracion() {
+		return comentariosAdministracion;
+	}
+
+	public void setComentariosAdministracion(boolean comentariosAdministracion) {
+		this.comentariosAdministracion = comentariosAdministracion;
+	}
+
+	public boolean isComentariosSolicitante() {
+		return comentariosSolicitante;
+	}
+
+	public void setComentariosSolicitante(boolean comentariosSolicitante) {
+		this.comentariosSolicitante = comentariosSolicitante;
+	}
+
+	public int getNumeroEvaluaciones() {
+		return numeroEvaluaciones;
+	}
+
+	public void setNumeroEvaluaciones(int numeroEvaluaciones) {
+		this.numeroEvaluaciones = numeroEvaluaciones;
+	}
+
 }
