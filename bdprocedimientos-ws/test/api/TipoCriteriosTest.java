@@ -242,7 +242,7 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		return errors;
 	}
 	
-	@Test
+	/*@Test
 	public void badRequestPost(){
 		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
 		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
@@ -254,6 +254,17 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		assertTrue(errores.contains("tipoCriterio.nombre", "Required"));
 		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));
 		//assertTrue(errores.contains("tipoCriterio.tipoValor", "Enumarated"));
+	}*/
+	
+	@Test
+	public void badRequestAllPaginate(){
+		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		Response get = GET(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios" + "?pageSize=a&pageStartIndex=b");
+		ValidationErrors errores = checkValidationErrors(get);
+		assertTrue(errores.contains("pageSize", "Formato incorrecto"));
+		assertTrue(errores.contains("pageStartIndex", "Formato incorrecto"));
 	}
 
 }

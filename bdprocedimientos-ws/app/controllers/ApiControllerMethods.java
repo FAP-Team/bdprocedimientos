@@ -98,7 +98,7 @@ public class ApiControllerMethods<T> {
 				.fromJson(json, classOfT);
 		}catch(JsonSyntaxException e){
 			throw new ErrorResponse(e.getMessage(), Http.StatusCode.BAD_REQUEST);			
-		}catch(Exception e){
+		}catch(IllegalArgumentException e){
 			throw new ErrorResponse(e.getMessage(), Http.StatusCode.BAD_REQUEST);
 		}
 	}
