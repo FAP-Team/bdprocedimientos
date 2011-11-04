@@ -34,9 +34,9 @@ public class ApiCriterioListaValor extends Controller {
 		ApiControllerMethods.post(criterioListaValor);
 	}
 	
-	public static void put(Long idEvaluacion, Long idTipoCriterio, Long id, String body){
+	public static void put(Long idTipoEvaluacion, Long idTipoCriterio, Long id, String body){
 		ApiControllerMethods.checkValidationErrors();
-		CriterioListaValor tipoCriterio = find(idEvaluacion, idTipoCriterio, id);
+		CriterioListaValor tipoCriterio = find(idTipoEvaluacion, idTipoCriterio, id);
 		ApiControllerMethods.put(tipoCriterio, body);
 	}
 	
