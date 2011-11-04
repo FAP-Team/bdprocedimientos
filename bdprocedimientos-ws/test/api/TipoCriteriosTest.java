@@ -226,13 +226,16 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 	@Test
 	public void notFound(){
 		int randomId = 25;
-		Response put = PUT(TiposEvaluacionesURL + "/" + randomId + "/tiposcriterios/" + randomId, "application/json", "");
+		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		Response put = PUT(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposcriterios/" + randomId, "application/json", "");
 		assertIsNotFound(put);
 		
-		Response get = GET(TiposEvaluacionesURL + "/" + randomId + "/tiposcriterios/" + randomId);
+		Response get = GET(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposcriterios/" + randomId);
 		assertIsNotFound(get);
 		
-		Response delete = DELETE(TiposEvaluacionesURL + "/" + randomId + "/tiposcriterios/" + randomId);
+		Response delete = DELETE(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposcriterios/" + randomId);
 		assertIsNotFound(delete);
 	}
 	

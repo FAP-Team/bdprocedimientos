@@ -208,7 +208,76 @@ public class CriterioListaValorTest extends FunctionalTest{
 		
 		assertNotNull(criterioListaValor);
 		assertEquals("16.234", criterioListaValor.valor.toString());
-		assertEquals("descripcion 1", criterioListaValor.descripcion);
+		assertEquals("descripcion 2", criterioListaValor.descripcion);
+	}
+	
+	@Test
+	public void notFound(){
+		int randomId = 25;
+		CrearDependencias("procedimiento", "Nombre", true, false, "nombre", "manual", "1.1.1", "lista", 8, true, false);
+		Response put = PUT(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/" + randomId, "application/json", "");
+		assertIsNotFound(put);
+		
+		Response get = GET(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/" + randomId);
+		assertIsNotFound(get);
+		
+		Response delete = DELETE(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/" + randomId);
+		assertIsNotFound(delete);
+	}
+	
+	public ValidationErrors checkValidationErrors(Response response){
+		assertEquals((int)Http.StatusCode.BAD_REQUEST, (int)response.status);
+		ValidationErrors errors = new Gson().fromJson(getContent(response), ValidationErrors.class);
+		return errors;
+	}
+	
+	@Test
+	public void badRequestPost(){
+		CrearDependencias("procedimiento", "Nombre", true, false, "nombre", "manual", "1.1.1", "lista", 8, true, false);
+		String listaValor = listaValorJson(6.9, null);
+		Response post = POST(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores", "application/json", listaValor);
+		ValidationErrors errores = checkValidationErrors(post);
+		assertTrue(errores.contains("criterioListaValor.descripcion", "Required"));
+	}
+	
+	@Test
+	public void badRequestPut(){
+		CrearDependencias("procedimiento", "Nombre", true, false, "nombre", "manual", "1.1.1", "lista", 8, true, false);
+		
+		// Creamos el tipo de valor
+		String listaValor = listaValorJson(4.815, "descripcion");
+		Response post = POST(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores", "application/json", listaValor);
+		assertIsOk(post);
+
+		CriterioListaValor criterioListaValor= new Gson().fromJson(getContent(post), CriterioListaValor.class);
+
+		listaValor = listaValorJson(16.234, null);
+		
+		Response put = PUT(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/"+criterioListaValor.id, "application/json", listaValor);
+		ValidationErrors errores = checkValidationErrors(put);				
+		assertTrue(errores.contains("criterioListaValor.descripcion", "Required"));
+	}
+	
+	public void badRequestWithIncorrectId(Response response){
+		ValidationErrors errores = checkValidationErrors(response);
+		assertTrue(errores.contains("id", "Formato incorrecto"));
+	}
+	
+	@Test
+	public void badRequestGet(){
+		CrearDependencias("procedimiento", "Nombre", true, false, "nombre", "manual", "1.1.1", "lista", 8, true, false);
+		badRequestWithIncorrectId(GET(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/notAValidId"));
+		badRequestWithIncorrectId(PUT(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/notAValidId", "application/json", ""));
+		badRequestWithIncorrectId(DELETE(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores/notAValidId"));
+	}
+	
+	@Test
+	public void badRequestAllPaginate(){
+		CrearDependencias("procedimiento", "Nombre", true, false, "nombre", "manual", "1.1.1", "lista", 8, true, false);
+		Response get = GET(TiposEvaluacionesURL+"/"+TE.id+"/tiposcriterios/"+TC.id+"/listavalores" + "?pageSize=a&pageStartIndex=b");
+		ValidationErrors errores = checkValidationErrors(get);
+		assertTrue(errores.contains("pageSize", "Formato incorrecto"));
+		assertTrue(errores.contains("pageStartIndex", "Formato incorrecto"));
 	}
 
 }
