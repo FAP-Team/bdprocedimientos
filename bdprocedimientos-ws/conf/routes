@@ -43,6 +43,14 @@ POST    /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles         
 PUT     /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles/{id}      ApiTipoDocumentoAccesible.put
 DELETE  /tiposevaluaciones/{idTipoEvaluacion}/tiposdocumentosaccesibles/{id}      ApiTipoDocumentoAccesible.delete
 
+
+#Tipos de Areas deEvaluaciones
+GET    /tiposareasevaluacion        ApiTipoAreaEvaluacion.all
+GET    /tiposareasevaluacion/{id}   ApiTipoAreaEvaluacion.get
+POST   /tiposareasevaluacion        ApiTipoAreaEvaluacion.post
+PUT    /tiposareasevaluacion/{id}   ApiTipoAreaEvaluacion.put
+DELETE /tiposareasevaluacion/{id}   ApiTipoAreaEvaluacion.delete
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
