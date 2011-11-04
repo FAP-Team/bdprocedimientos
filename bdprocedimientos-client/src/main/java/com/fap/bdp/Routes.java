@@ -41,4 +41,13 @@ public class Routes {
 	public static String getUrlTiposDocumentosAccesibles(Long idTipoEvaluacion, Long idTipoDocumentoAccesible){
 		return getUrlTiposDocumentosAccesibles(idTipoEvaluacion) + "/" + idTipoDocumentoAccesible;
 	}
+	
+	public static String getUrlTiposAreasEvaluacion(){
+		return "/tiposareasevaluacion";
+	}
+	
+	public static String getUrlTiposAreasEvaluacion(Long idTipoAreaEvaluacion){
+		return getUrlTiposAreasEvaluacion() + "/" + idTipoAreaEvaluacion;
+	}
+	
 }

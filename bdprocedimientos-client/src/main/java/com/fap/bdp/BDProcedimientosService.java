@@ -3,6 +3,7 @@ package com.fap.bdp;
 import java.util.List;
 
 import com.fap.bdp.domain.CriterioListaValor;
+import com.fap.bdp.domain.TipoAreaEvaluacion;
 import com.fap.bdp.domain.TipoCEconomico;
 import com.fap.bdp.domain.TipoCriterio;
 import com.fap.bdp.domain.TipoDocumentoAccesible;
@@ -32,6 +33,10 @@ public class BDProcedimientosService {
 		return restTemplate.getList(Routes.getUrlTiposCEconomicos(idTipoEvaluacion), TipoCEconomico.class);
 	}
 	
+	public List<TipoAreaEvaluacion> getTiposAreasEvaluacion() throws Exception {
+		return restTemplate.getList(Routes.getUrlTiposAreasEvaluacion(), TipoAreaEvaluacion.class);
+	}
+	
 	public List<TipoDocumentoAccesible> getTiposDocumentosAccesibles(Long idTipoEvaluacion) throws Exception{
 		return restTemplate.getList(Routes.getUrlTiposDocumentosAccesibles(idTipoEvaluacion), TipoDocumentoAccesible.class);
 	}
@@ -56,6 +61,10 @@ public class BDProcedimientosService {
 		return restTemplate.get(Routes.getUrlTiposCEconomicos(idTipoEvaluacion, idTipoDocumentoAccesible), TipoDocumentoAccesible.class);
 	}
 		
+	public TipoAreaEvaluacion getTipoAreaEvaluacion(Long idTipoAreaEvaluacion) throws Exception {
+		return restTemplate.get(Routes.getUrlTiposAreasEvaluacion(idTipoAreaEvaluacion), TipoAreaEvaluacion.class);
+	}
+	
 	public TipoEvaluacion createTipoEvaluacionRecusive(TipoEvaluacion tipoEvaluacion) throws Exception {
 		TipoEvaluacion tipoEvaluacionCreated = createTipoEvaluacion(tipoEvaluacion);
 		for(TipoCriterio tipoCriterio : tipoEvaluacion.getTiposCriterios()){
@@ -92,6 +101,10 @@ public class BDProcedimientosService {
 	public TipoDocumentoAccesible createTipoDocumentoAccesible(Long idTipoEvaluacion, TipoDocumentoAccesible tipoDocumentoAccesible) throws Exception {
 		return restTemplate.create(Routes.getUrlTiposDocumentosAccesibles(idTipoEvaluacion), tipoDocumentoAccesible, TipoDocumentoAccesible.class);
 	}
+
+	public TipoAreaEvaluacion createTipoAreaEvaluacion(TipoAreaEvaluacion tipoAreaEvaluacion) throws Exception {
+		return restTemplate.create(Routes.getUrlTiposAreasEvaluacion(), tipoAreaEvaluacion, TipoAreaEvaluacion.class);
+	}
 	
 	public void deleteTipoEvaluacion(Long idTipoEvaluacion) throws Exception {
 		restTemplate.delete(Routes.getUrlTiposEvaluaciones(idTipoEvaluacion));
@@ -113,6 +126,10 @@ public class BDProcedimientosService {
 		restTemplate.delete(Routes.getUrlTiposDocumentosAccesibles(idTipoEvaluacion, idTipoDocumentoAccesible));
 	}
 	
+	public void deleteTipoAreaEvaluacion(Long idTipoAreaEvaluacion) throws Exception {
+		restTemplate.delete(Routes.getUrlTiposAreasEvaluacion(idTipoAreaEvaluacion));
+	}
+	
 	public TipoEvaluacion updateTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
 		return restTemplate.update(Routes.getUrlTiposEvaluaciones(tipoEvaluacion.getId()), tipoEvaluacion, TipoEvaluacion.class);
 	}
@@ -131,5 +148,9 @@ public class BDProcedimientosService {
 	
 	public TipoCriterio updateTipoDocumentoAccesible(Long idEvaluacion, TipoCriterio tipoCriterio) throws Exception {
 		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.getId()), tipoCriterio, TipoCriterio.class);
+	}
+	
+	public TipoAreaEvaluacion updateTipoAreaEvaluacion(TipoAreaEvaluacion tipoAreaEvaluacion) throws Exception {
+		return restTemplate.create(Routes.getUrlTiposAreasEvaluacion(tipoAreaEvaluacion.getId()), tipoAreaEvaluacion, TipoAreaEvaluacion.class);
 	}
 }
