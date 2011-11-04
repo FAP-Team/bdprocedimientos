@@ -22,14 +22,14 @@ public class ApiTipoAreaEvaluacion extends Controller {
 	}
 	
 	public static void post(String body){
-		TipoAreaEvaluacion tipoEvaluacion = ApiControllerMethods.deserialize(body, TipoAreaEvaluacion.class);		
-		ApiControllerMethods.post(tipoEvaluacion);
+		TipoAreaEvaluacion tipoAreaEvaluacion = ApiControllerMethods.deserialize(body, TipoAreaEvaluacion.class);		
+		ApiControllerMethods.post(tipoAreaEvaluacion);
 	}
 	
 	public static void put(Long id, String body){
 		ApiControllerMethods.checkValidationErrors();
-		TipoAreaEvaluacion tipoEvaluacion = TipoAreaEvaluacion.findById(id);
-		ApiControllerMethods.put(tipoEvaluacion, body);		
+		TipoAreaEvaluacion tipoAreaEvaluacion = TipoAreaEvaluacion.findById(id);
+		ApiControllerMethods.put(tipoAreaEvaluacion, body);		
 	}
 	
 }
