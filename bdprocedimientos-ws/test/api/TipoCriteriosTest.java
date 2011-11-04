@@ -8,6 +8,7 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import models.TipoCriterio;
+import models.TipoCriterio;
 import models.TipoEvaluacion;
 
 import org.junit.Before;
@@ -255,6 +256,37 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));
 		//assertTrue(errores.contains("tipoCriterio.tipoValor", "Enumarated"));
 	}*/
+	
+	@Test
+	public void badRequestPut(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		String criterio = criterioJson("nombre", "manual", "1.1.1", "lista", 8, true, false);
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
+		assertIsOk(post);
+		TipoCriterio tipoCriterio = new Gson().fromJson(getContent(post), TipoCriterio.class);
+		
+		criterio = criterioJson(null, "manual", null, "lista", 8, true, false);
+		Response put = PUT(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposcriterios/" + tipoCriterio.id, "application/json", criterio);
+		ValidationErrors errores = checkValidationErrors(put);				
+		assertTrue(errores.contains("tipoCriterio.nombre", "Required"));
+		assertTrue(errores.contains("tipoCriterio.jerarquia", "Required"));
+	}
+	
+	public void badRequestWithIncorrectId(Response response){
+		ValidationErrors errores = checkValidationErrors(response);
+		assertTrue(errores.contains("id", "Formato incorrecto"));
+	}
+	
+	@Test
+	public void badRequestGet(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		badRequestWithIncorrectId(GET(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposcriterios/notAValidId"));
+		badRequestWithIncorrectId(PUT(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposcriterios/notAValidId", "application/json", ""));
+		badRequestWithIncorrectId(DELETE(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposcriterios/notAValidId"));
+	}
 	
 	@Test
 	public void badRequestAllPaginate(){

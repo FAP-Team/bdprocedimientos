@@ -8,6 +8,7 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import models.TipoCEconomico;
+import models.TipoCriterio;
 import models.TipoEvaluacion;
 
 import org.junit.Before;
@@ -177,26 +178,26 @@ public class TipoCEconomicoTest extends FunctionalTest{
 		assertEquals(0, all.size());
 	}
 	
-//	@Test
-//	public void put(){
-//		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
-//		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
-//		String cEconomico = cEconomicoJson("nombre", "manual", "1.1.1");
-//		// Insertamos
-//		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos", "application/json", cEconomico);
-//		assertIsOk(post);
-//				
-//		TipoCEconomico tipoCEconomico = new Gson().fromJson(getContent(post), TipoCEconomico.class);
-//
-//		cEconomico = cEconomicoJson("nombre2", "automatico", "1.2.1");
-//		
-//		Response put = PUT(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos/"+tipoCEconomico.id, "application/json", cEconomico);
-//		assertIsOk(put);
-//		tipoCEconomico = new Gson().fromJson(getContent(put), TipoCEconomico.class);
-//		assertNotNull(tipoCEconomico);
-//		assertEquals("nombre2", tipoCEconomico.nombre);
-//		assertEquals("1.2.1", tipoCEconomico.jerarquia);
-//	}
+	@Test
+	public void put(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		String cEconomico = cEconomicoJson("nombre", "manual", "1.1.1");
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos", "application/json", cEconomico);
+		assertIsOk(post);
+				
+		TipoCEconomico tipoCEconomico = new Gson().fromJson(getContent(post), TipoCEconomico.class);
+
+		cEconomico = cEconomicoJson("nombre2", "automatico", "1.2.1");
+		
+		Response put = PUT(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos/"+tipoCEconomico.id, "application/json", cEconomico);
+		assertIsOk(put);
+		tipoCEconomico = new Gson().fromJson(getContent(put), TipoCEconomico.class);
+		assertNotNull(tipoCEconomico);
+		assertEquals("nombre2", tipoCEconomico.nombre);
+		assertEquals("1.2.1", tipoCEconomico.jerarquia);
+	}
 	
 	@Test
 	public void notFound(){
@@ -226,9 +227,40 @@ public class TipoCEconomicoTest extends FunctionalTest{
 		System.out.println(getContent(post));
 		ValidationErrors errores = checkValidationErrors(post);
 		assertTrue(errores.contains("tipoCEconomico.nombre", "Required"));
-		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));
-		//assertTrue(errores.contains("tipoCriterio.tipoValor", "Enumarated"));
+		//assertTrue(errores.contains("tipoCEconomicos.clase", "Required"));
+		//assertTrue(errores.contains("tipoCEconomicos.tipoValor", "Enumarated"));
 	}*/
+	
+	@Test
+	public void badRequestPut(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		String cEconomicos = cEconomicoJson("nombre", "manual", "1.1.1");
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos", "application/json", cEconomicos);
+		assertIsOk(post);
+		TipoCEconomico tipoCEconomico = new Gson().fromJson(getContent(post), TipoCEconomico.class);
+		
+		cEconomicos = cEconomicoJson(null, "manual", null);
+		Response put = PUT(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposceconomicos/" + tipoCEconomico.id, "application/json", cEconomicos);
+		ValidationErrors errores = checkValidationErrors(put);				
+		assertTrue(errores.contains("tipoCEconomico.nombre", "Required"));
+		assertTrue(errores.contains("tipoCEconomico.jerarquia", "Required"));
+	}
+	
+	public void badRequestWithIncorrectId(Response response){
+		ValidationErrors errores = checkValidationErrors(response);
+		assertTrue(errores.contains("id", "Formato incorrecto"));
+	}
+	
+	@Test
+	public void badRequestGet(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		badRequestWithIncorrectId(GET(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposceconomicos/notAValidId"));
+		badRequestWithIncorrectId(PUT(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposceconomicos/notAValidId", "application/json", ""));
+		badRequestWithIncorrectId(DELETE(TiposEvaluacionesURL + "/" + evaluacion.id +  "/tiposceconomicos/notAValidId"));
+	}
 	
 	@Test
 	public void badRequestAllPaginate(){
