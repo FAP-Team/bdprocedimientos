@@ -34,9 +34,9 @@ public class ApiTipoDocumentoAccesible extends Controller {
 		ApiControllerMethods.post(tipoDocumentoAccesible);
 	}
 	
-	public static void put(Long idEvaluacion, Long id, String body){
+	public static void put(Long idTipoEvaluacion, Long id, String body){
 		ApiControllerMethods.checkValidationErrors();
-		TipoDocumentoAccesible tipoDocumentoAccesible = find(idEvaluacion, id);
+		TipoDocumentoAccesible tipoDocumentoAccesible = find(idTipoEvaluacion, id);
 		ApiControllerMethods.put(tipoDocumentoAccesible, body);
 	}
 	
