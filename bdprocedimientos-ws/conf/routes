@@ -5,6 +5,9 @@
 # Módulo CRUD
 *       / module:crud
 
+#WSDL
+GET /service.wsdl   WSDL.wsdl                      
+
 #Tipos de Evaluaciones
 GET    /tiposevaluaciones        ApiTipoEvaluacion.all
 GET    /tiposevaluaciones/{id}   ApiTipoEvaluacion.get
