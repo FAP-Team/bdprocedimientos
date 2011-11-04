@@ -191,7 +191,6 @@ public class TipoAreasEvaluacionesTest extends FunctionalTest{
 		String areaEvaluacion = areasEvaluacionJson(null, null);
 		Response post = POST(TiposAreasEvaluacionURL, "application/json", areaEvaluacion);
 		
-		System.out.println(getContent(post));
 		ValidationErrors errores = checkValidationErrors(post);
 		assertTrue(errores.contains("tipoAreaEvaluacion.codigo", "Required"));
 		assertTrue(errores.contains("tipoAreaEvaluacion.descripcion", "Required"));
@@ -208,8 +207,28 @@ public class TipoAreasEvaluacionesTest extends FunctionalTest{
 		areaEvaluacion = areasEvaluacionJson(null, null);
 		Response put = PUT(TiposAreasEvaluacionURL + "/" + tipoAreaEvaluacion.id, "application/json", areaEvaluacion);
 		ValidationErrors errores = checkValidationErrors(put);				
-		assertTrue(errores.contains("tipoAreasEvaluacion.codigo", "Required"));
-		assertTrue(errores.contains("tipoAreasEvaluacion.descripcion", "Required"));		
+		assertTrue(errores.contains("tipoAreaEvaluacion.codigo", "Required"));
+		assertTrue(errores.contains("tipoAreaEvaluacion.descripcion", "Required"));		
+	}
+	
+	public void badRequestWithIncorrectId(Response response){
+		ValidationErrors errores = checkValidationErrors(response);
+		assertTrue(errores.contains("id", "Formato incorrecto"));
+	}
+	
+	@Test
+	public void badRequestGet(){
+		badRequestWithIncorrectId(GET(TiposAreasEvaluacionURL + "/notAValidId"));
+		badRequestWithIncorrectId(PUT(TiposAreasEvaluacionURL + "/notAValidId", "application/json", ""));
+		badRequestWithIncorrectId(DELETE(TiposAreasEvaluacionURL + "/notAValidId"));
+	}
+	
+	@Test
+	public void badRequestAllPaginate(){
+		Response get = GET(TiposAreasEvaluacionURL + "?pageSize=a&pageStartIndex=b");
+		ValidationErrors errores = checkValidationErrors(get);
+		assertTrue(errores.contains("pageSize", "Formato incorrecto"));
+		assertTrue(errores.contains("pageStartIndex", "Formato incorrecto"));
 	}
 
 }
