@@ -95,7 +95,7 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		assertEquals(all.get(2), limit1Start2.get(0));
 	}
 	
-	private List<TipoEvaluacion> fetchAll(){
+	public List<TipoEvaluacion> fetchAll(){
 		Response get = GET(TiposEvaluacionesURL);
 		assertIsOk(get);
 		return parseAll(get);

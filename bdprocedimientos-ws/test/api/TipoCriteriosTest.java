@@ -8,7 +8,6 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import models.TipoCriterio;
-import models.TipoCriterio;
 import models.TipoEvaluacion;
 
 import org.junit.Before;
@@ -243,18 +242,19 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		return errors;
 	}
 	
-	/*@Test
-	public void badRequestPost(){
-		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
-		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
-		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
-		String criterio = criterioJson(null, null, "1.2.1", null, 9, true, false);
-		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
-		ValidationErrors errores = checkValidationErrors(post);
-		assertTrue(errores.contains("tipoCriterio.nombre", "Required"));
-		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));
-		//assertTrue(errores.contains("tipoCriterio.tipoValor", "Enumarated"));
-	}*/
+//	@Test
+//	public void badRequestPost(){
+//		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
+//		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+//		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+//		String criterio = criterioJson(null, null, "1.2.1", "largo", 9, true, false);
+//		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
+//		System.out.println(getContent(post));
+//		ValidationErrors errores = checkValidationErrors(post);
+//		assertTrue(errores.contains("tipoCriterio.nombre", "Required"));
+//		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));
+//		//assertTrue(errores.contains("tipoCriterio.tipoValor", "Required"));
+//	}
 	
 	@Test
 	public void badRequestPut(){

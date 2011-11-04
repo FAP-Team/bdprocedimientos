@@ -45,6 +45,7 @@ public class TipoAreasEvaluacionesTest extends FunctionalTest{
 		String areaEvaluacion = areasEvaluacionJson("codigo", "descripcion");
 		
 		Response post = POST(TiposAreasEvaluacionURL, "application/json", areaEvaluacion);
+		System.out.println(getContent(post));
 		assertIsOk(post);
 		
 		post = POST(TiposAreasEvaluacionURL, "application/json", areaEvaluacion);
@@ -64,7 +65,7 @@ public class TipoAreasEvaluacionesTest extends FunctionalTest{
 		assertNotNull(first);
 		assertNotNull(first.id);
 		assertEquals("codigo", first.codigo);
-		assertEquals("codigo", first.codigo);
+		assertEquals("descripcion", first.descripcion);
 	}
 	
 	private List<TipoAreaEvaluacion> fetchAll(){
