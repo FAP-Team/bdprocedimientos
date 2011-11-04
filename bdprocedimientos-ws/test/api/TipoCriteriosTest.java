@@ -7,7 +7,10 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import models.CriterioListaValor;
+import models.TipoCEconomico;
 import models.TipoCriterio;
+import models.TipoDocumentoAccesible;
 import models.TipoEvaluacion;
 
 import org.junit.Before;
@@ -196,6 +199,37 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		all = fetchAll(evaluacion.id);
 		assertNotNull(all);
 		assertEquals(0, all.size());
+	}
+	
+	@Test public void deleteCascade(){
+		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		// Creamos el tipo de criterio
+		String criterio = criterioJson("nombre", "manual", "1.1.1", "lista", 8, true, false);
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
+		assertIsOk(post);
+		TipoCriterio tipoCriterio = new Gson().fromJson(getContent(post), TipoCriterio.class);
+		
+		CriterioListaValorTest cLV = new CriterioListaValorTest();
+		String listaValor = cLV.listaValorJson(9.1, "descripcion");
+		post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id+"/listavalores", "application/json", listaValor);
+		post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id+"/listavalores", "application/json", listaValor);
+		post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id+"/listavalores", "application/json", listaValor);
+		
+		// Borramos la evaluacion
+		Response delete = DELETE(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id);
+		assertIsOk(delete);
+		List<TipoCriterio> all = fetchAll(evaluacion.id);
+		assertNotNull(all);
+		assertEquals(0, all.size());
+				
+		List<CriterioListaValor> allCLV = cLV.fetchAll(evaluacion.id, tipoCriterio.id);
+		assertNotNull(allCLV);
+		assertEquals(0, allCLV.size());
+		
+		
 	}
 	
 	@Test
