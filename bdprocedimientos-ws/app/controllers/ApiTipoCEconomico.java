@@ -34,9 +34,9 @@ public class ApiTipoCEconomico extends Controller {
 		ApiControllerMethods.post(tipoCEconomico);
 	}
 	
-	public static void put(Long idEvaluacion, Long id, String body){
+	public static void put(Long idTipoEvaluacion, Long id, String body){
 		ApiControllerMethods.checkValidationErrors();
-		TipoCEconomico tipoCEconomico = find(idEvaluacion, id);
+		TipoCEconomico tipoCEconomico = find(idTipoEvaluacion, id);
 		ApiControllerMethods.put(tipoCEconomico, body);
 	}
 	

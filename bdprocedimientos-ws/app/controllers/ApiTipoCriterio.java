@@ -2,6 +2,7 @@ package controllers;
 
 import models.TipoCriterio;
 import models.TipoEvaluacion;
+import play.Logger;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.mvc.Controller;
 
@@ -34,9 +35,9 @@ public class ApiTipoCriterio extends Controller {
 		ApiControllerMethods.post(tipoCriterio);
 	}
 	
-	public static void put(Long idEvaluacion, Long id, String body){
+	public static void put(Long idTipoEvaluacion, Long id, String body){
 		ApiControllerMethods.checkValidationErrors();
-		TipoCriterio tipoCriterio = find(idEvaluacion, id);
+		TipoCriterio tipoCriterio = find(idTipoEvaluacion, id);
 		ApiControllerMethods.put(tipoCriterio, body);
 	}
 	

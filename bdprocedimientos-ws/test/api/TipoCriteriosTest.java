@@ -198,30 +198,30 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		assertEquals(0, all.size());
 	}
 	
-//	@Test
-//	public void put(){
-//		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
-//		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
-//		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
-//		// Creamos el tipo de criterio
-//		String criterio = criterioJson("nombre", "manual", "1.1.1", "lista", 8, true, false);
-//		// Insertamos
-//		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
-//		assertIsOk(post);
-//				
-//		TipoCriterio tipoCriterio = new Gson().fromJson(getContent(post), TipoCriterio.class);
-//
-//		criterio = criterioJson("nombre2", "automatico", "1.2.1", "lista", 9, true, false);
-//		
-//		Response put = PUT(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id, "application/json", criterio);
-//		assertIsOk(put);
-//		tipoCriterio = new Gson().fromJson(getContent(put), TipoCriterio.class);
-//		assertNotNull(tipoCriterio);
-//		assertEquals("nombre2", tipoCriterio.nombre);
-//		assertEquals("1.2.1", tipoCriterio.jerarquia);
-//		assertEquals(false, tipoCriterio.comentariosSolicitante);
-//		assertEquals(true, tipoCriterio.comentariosAdministracion);
-//	}
+	@Test
+	public void put(){
+		// Creamos la evaluacion que ira unida al tipo criterio, para conocer su ID
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		// Creamos el tipo de criterio
+		String criterio = criterioJson("nombre", "manual", "1.1.1", "lista", 8, true, false);
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
+		assertIsOk(post);
+				
+		TipoCriterio tipoCriterio = new Gson().fromJson(getContent(post), TipoCriterio.class);
+
+		criterio = criterioJson("nombre2", "automatico", "1.2.1", "lista", 9, true, false);
+		
+		Response put = PUT(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios/"+tipoCriterio.id, "application/json", criterio);
+		assertIsOk(put);
+		tipoCriterio = new Gson().fromJson(getContent(put), TipoCriterio.class);
+		assertNotNull(tipoCriterio);
+		assertEquals("nombre2", tipoCriterio.nombre);
+		assertEquals("1.2.1", tipoCriterio.jerarquia);
+		assertEquals(false, tipoCriterio.comentariosSolicitante);
+		assertEquals(true, tipoCriterio.comentariosAdministracion);
+	}
 	
 	@Test
 	public void notFound(){
