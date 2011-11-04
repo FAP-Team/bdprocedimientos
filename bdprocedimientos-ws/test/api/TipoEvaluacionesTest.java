@@ -7,7 +7,10 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import models.TipoDocumentoAccesible;
 import models.TipoEvaluacion;
+import models.TipoCriterio;
+import models.TipoCEconomico;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -172,6 +175,52 @@ public class TipoEvaluacionesTest extends FunctionalTest {
 		assertEquals("nombre1", tipoEvaluacion.nombre);
 		assertEquals(true, tipoEvaluacion.comentariosSolicitante);
 		assertEquals(false, tipoEvaluacion.comentariosAdministracion);
+	}
+	
+	@Test
+	public void deleteCascade (){
+		// Creamos la evaluacion
+		String evaluacion = evaluacionJson("procedimiento", "nombre", true, false);
+		Response post = POST(TiposEvaluacionesURL, "application/json", evaluacion);
+		assertIsOk(post);		
+		TipoEvaluacion tipoEvaluacion = new Gson().fromJson(getContent(post), TipoEvaluacion.class);
+		
+		// Creamos un tipo criterio asociado a la evaluacion
+		TipoCriteriosTest TCriterio = new TipoCriteriosTest();
+		String criterio = TCriterio.criterioJson("nombre", "manual", "1.1.1", "lista", 8, true, false);
+		post = POST(TiposEvaluacionesURL+"/"+tipoEvaluacion.id+"/tiposcriterios", "application/json", criterio);
+		assertIsOk(post);
+		   // Creamos otro criterio, para probar con 2, y que los 2 despues se borren en cascada
+		post = POST(TiposEvaluacionesURL+"/"+tipoEvaluacion.id+"/tiposcriterios", "application/json", criterio);
+		assertIsOk(post);
+		
+		// Creamos un tipo CEconomico asociado a la evaluacion
+		TipoCEconomicoTest TCEconomico = new TipoCEconomicoTest();
+		String cEconomico = TCEconomico.cEconomicoJson("nombre", "manual", "1.1.1");
+		post = POST(TiposEvaluacionesURL+"/"+tipoEvaluacion.id+"/tiposceconomicos", "application/json", cEconomico);
+		assertIsOk(post);
+		
+		// Creamos un tipo Documento Accesible asociado a la evaluacion
+		TipoDocumentoAccesibleTest TDocAcc = new TipoDocumentoAccesibleTest();
+		String documentoAccesible = TDocAcc.documentoAccesibleJson("uri");
+		post = POST(TiposEvaluacionesURL+"/"+tipoEvaluacion.id+"/tiposdocumentosaccesibles", "application/json", documentoAccesible);
+		assertIsOk(post);
+		
+		// Borramos la evaluacion
+		Response delete = DELETE(TiposEvaluacionesURL + "/" + tipoEvaluacion.id);
+		assertIsOk(delete);
+		List<TipoEvaluacion> all = fetchAll();
+		assertNotNull(all);
+		assertEquals(0, all.size());
+		
+		// Comprobamos que se borraron en cascada los elementos asociadas a la evaluacion borrada
+		List<TipoCEconomico> allCE = TCEconomico.fetchAll(tipoEvaluacion.id);
+		assertNotNull(allCE);
+		assertEquals(0, allCE.size());
+		
+		List<TipoDocumentoAccesible> allDocAcc = TDocAcc.fetchAll(tipoEvaluacion.id);
+		assertNotNull(allDocAcc);
+		assertEquals(0, allDocAcc.size());
 	}
 	
 	@Test

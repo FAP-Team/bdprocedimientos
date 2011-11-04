@@ -64,7 +64,7 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		return tiposCriterios;
 	}
 	
-	private List<TipoCriterio> fetchAll(Long Eid){
+	public List<TipoCriterio> fetchAll(Long Eid){
 		Response get = GET(TiposEvaluacionesURL+"/"+Eid+"/tiposcriterios");
 		assertIsOk(get);
 		return parseAll(get);
@@ -250,7 +250,6 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
 		String criterio = criterioJson(null, null, "1.2.1", null, 9, true, false);
 		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposcriterios", "application/json", criterio);
-		System.out.println(getContent(post));
 		ValidationErrors errores = checkValidationErrors(post);
 		assertTrue(errores.contains("tipoCriterio.nombre", "Required"));
 		//assertTrue(errores.contains("tipoCriterio.clase", "Required"));

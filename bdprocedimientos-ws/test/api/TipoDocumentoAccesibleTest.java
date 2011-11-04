@@ -58,7 +58,7 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		return tiposDocumentosAccesible;
 	}
 	
-	private List<TipoDocumentoAccesible> fetchAll(Long Eid){
+	public List<TipoDocumentoAccesible> fetchAll(Long Eid){
 		Response get = GET(TiposEvaluacionesURL+"/"+Eid+"/tiposdocumentosaccesibles");
 		assertIsOk(get);
 		return parseAll(get);
@@ -212,32 +212,31 @@ public static final String TiposEvaluacionesURL = "/tiposevaluaciones";
 		return errors;
 	}
 	
-//	@Test
-//	public void badRequestPost(){
-//		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
-//		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
-//		String documentoAccesible = documentoAccesibleJson(null);
-//		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposdocumentosaccesibles", "application/json", documentoAccesible);
-//		System.out.println(getContent(post));
-//		ValidationErrors errores = checkValidationErrors(post);
-//		assertFalse(errores.contains("tipoDocumentoAccesible.uri", "Required"));
-//	}
-//	
-//	@Test
-//	public void badRequestPut(){
-//		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
-//		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
-//		String documentoAccesible = documentoAccesibleJson("uri");
-//		// Insertamos
-//		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposdocumentosaccesibles", "application/json", documentoAccesible);
-//		assertIsOk(post);
-//		TipoDocumentoAccesible tipoDocumentoAccesible = new Gson().fromJson(getContent(post), TipoDocumentoAccesible.class);
-//		
-//		documentoAccesible = documentoAccesibleJson(null);
-//		Response put = PUT(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposdocumentosaccesibles/" + tipoDocumentoAccesible.id, "application/json", documentoAccesible);
-//		ValidationErrors errores = checkValidationErrors(put);				
-//		assertFalse(errores.contains("tipoDocumentoAccesible.uri", "Required"));
-//	}
+	@Test
+	public void badRequestPost(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		String documentoAccesible = documentoAccesibleJson(null);
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposdocumentosaccesibles", "application/json", documentoAccesible);
+		ValidationErrors errores = checkValidationErrors(post);
+		assertTrue(errores.contains("tipoDocumentoAccesible.uri", "Required"));
+	}
+	
+	@Test
+	public void badRequestPut(){
+		Response evalPost = CrearEvaluacionJson("procedimiento", "nombre", true, false);
+		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
+		String documentoAccesible = documentoAccesibleJson("uri");
+		// Insertamos
+		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposdocumentosaccesibles", "application/json", documentoAccesible);
+		assertIsOk(post);
+		TipoDocumentoAccesible tipoDocumentoAccesible = new Gson().fromJson(getContent(post), TipoDocumentoAccesible.class);
+		
+		documentoAccesible = documentoAccesibleJson(null);
+		Response put = PUT(TiposEvaluacionesURL + "/" + evaluacion.id + "/tiposdocumentosaccesibles/" + tipoDocumentoAccesible.id, "application/json", documentoAccesible);
+		ValidationErrors errores = checkValidationErrors(put);				
+		assertTrue(errores.contains("tipoDocumentoAccesible.uri", "Required"));
+	}
 	
 	public void badRequestWithIncorrectId(Response response){
 		ValidationErrors errores = checkValidationErrors(response);

@@ -59,7 +59,7 @@ public class TipoCEconomicoTest extends FunctionalTest{
 		return tiposCEconomico;
 	}
 	
-	private List<TipoCEconomico> fetchAll(Long Eid){
+	public List<TipoCEconomico> fetchAll(Long Eid){
 		Response get = GET(TiposEvaluacionesURL+"/"+Eid+"/tiposceconomicos");
 		assertIsOk(get);
 		return parseAll(get);
@@ -224,7 +224,6 @@ public class TipoCEconomicoTest extends FunctionalTest{
 		TipoEvaluacion evaluacion = new Gson().fromJson(getContent(evalPost), TipoEvaluacion.class);
 		String cEconomico = cEconomicoJson(null, null, "1.2.1");
 		Response post = POST(TiposEvaluacionesURL+"/"+evaluacion.id+"/tiposceconomicos", "application/json", cEconomico);
-		System.out.println(getContent(post));
 		ValidationErrors errores = checkValidationErrors(post);
 		assertTrue(errores.contains("tipoCEconomico.nombre", "Required"));
 		//assertTrue(errores.contains("tipoCEconomicos.clase", "Required"));
