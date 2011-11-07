@@ -31,7 +31,7 @@ public class TipoEvaluacionServiceTest {
     }
     
     
-    private TipoEvaluacion dummyTipoEvaluacion(){
+    public TipoEvaluacion dummyTipoEvaluacion(){
     	TipoEvaluacion tipoEvaluacion = new TipoEvaluacion();
     	tipoEvaluacion.setNombre("Evaluacion a");
     	tipoEvaluacion.setTipoProcedimiento("Procedimiento a");
@@ -40,7 +40,7 @@ public class TipoEvaluacionServiceTest {
     	return tipoEvaluacion;
     }
     
-    private void deleteTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
+    public void deleteTipoEvaluacion(TipoEvaluacion tipoEvaluacion) throws Exception {
     	service.deleteTipoEvaluacion(tipoEvaluacion.getId());
     	try {
     		service.getTipoEvaluacion(tipoEvaluacion.getId());

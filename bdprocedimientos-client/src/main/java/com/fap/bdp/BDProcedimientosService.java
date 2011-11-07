@@ -58,7 +58,7 @@ public class BDProcedimientosService {
 	}
 	
 	public TipoDocumentoAccesible getTipoDocumentoAccesible(Long idTipoEvaluacion, Long idTipoDocumentoAccesible) throws Exception {
-		return restTemplate.get(Routes.getUrlTiposCEconomicos(idTipoEvaluacion, idTipoDocumentoAccesible), TipoDocumentoAccesible.class);
+		return restTemplate.get(Routes.getUrlTiposDocumentosAccesibles(idTipoEvaluacion, idTipoDocumentoAccesible), TipoDocumentoAccesible.class);
 	}
 		
 	public TipoAreaEvaluacion getTipoAreaEvaluacion(Long idTipoAreaEvaluacion) throws Exception {
@@ -139,18 +139,18 @@ public class BDProcedimientosService {
 	}
 	
 	public CriterioListaValor updateCriterioListaValor(Long idTipoEvaluacion, Long idTipoCriterio, CriterioListaValor criterioListaValor) throws Exception {
-		return restTemplate.update(Routes.getUrlCriterioListaValor(idTipoEvaluacion, idTipoCriterio, criterioListaValor.id), criterioListaValor, CriterioListaValor.class);
+		return restTemplate.update(Routes.getUrlCriterioListaValor(idTipoEvaluacion, idTipoCriterio, criterioListaValor.getId()), criterioListaValor, CriterioListaValor.class);
 	}
 	
 	public TipoCEconomico updateTipoCEconomico(Long idEvaluacion, TipoCEconomico tipoCEconomico) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCEconomico.getId()), tipoCEconomico, TipoCEconomico.class);
+		return restTemplate.update(Routes.getUrlTiposCEconomicos(idEvaluacion, tipoCEconomico.getId()), tipoCEconomico, TipoCEconomico.class);
 	}
 	
-	public TipoCriterio updateTipoDocumentoAccesible(Long idEvaluacion, TipoCriterio tipoCriterio) throws Exception {
-		return restTemplate.update(Routes.getUrlTiposCriterios(idEvaluacion, tipoCriterio.getId()), tipoCriterio, TipoCriterio.class);
+	public TipoDocumentoAccesible updateTipoDocumentoAccesible(Long idEvaluacion, TipoDocumentoAccesible tipoDocumentoAccesible) throws Exception {
+		return restTemplate.update(Routes.getUrlTiposDocumentosAccesibles(idEvaluacion, tipoDocumentoAccesible.getId()), tipoDocumentoAccesible, TipoDocumentoAccesible.class);
 	}
 	
 	public TipoAreaEvaluacion updateTipoAreaEvaluacion(TipoAreaEvaluacion tipoAreaEvaluacion) throws Exception {
-		return restTemplate.create(Routes.getUrlTiposAreasEvaluacion(tipoAreaEvaluacion.getId()), tipoAreaEvaluacion, TipoAreaEvaluacion.class);
+		return restTemplate.update(Routes.getUrlTiposAreasEvaluacion(tipoAreaEvaluacion.getId()), tipoAreaEvaluacion, TipoAreaEvaluacion.class);
 	}
 }
